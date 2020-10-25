@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payroll_KhromovaOM", "Payroll_KhromovaOM\Payroll_KhromovaOM.csproj", "{49C6457F-E851-4A32-AD6D-D0B7BCEDC801}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayrollTest_KhromovaOM", "PayrollTest_KhromovaOM\PayrollTest_KhromovaOM.csproj", "{CA2DA713-2115-461E-8A54-85962D53B413}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{49C6457F-E851-4A32-AD6D-D0B7BCEDC801}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49C6457F-E851-4A32-AD6D-D0B7BCEDC801}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49C6457F-E851-4A32-AD6D-D0B7BCEDC801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA2DA713-2115-461E-8A54-85962D53B413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA2DA713-2115-461E-8A54-85962D53B413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA2DA713-2115-461E-8A54-85962D53B413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA2DA713-2115-461E-8A54-85962D53B413}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
