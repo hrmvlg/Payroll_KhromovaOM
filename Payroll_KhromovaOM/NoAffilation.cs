@@ -4,8 +4,7 @@ using System.Text;
 
 namespace Payroll_KhromovaOM
 {
-    public interface Affiliation
+    class NoAffilation
     {
-
     }
 }

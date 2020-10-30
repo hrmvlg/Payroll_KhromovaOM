@@ -1,12 +1,11 @@
 ﻿using Payroll_KhromovaOM.Commissioned;
-using Payroll_KhromovaOM.Hourly;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Payroll_KhromovaOM
 {
-    public class SalesReceiptTransaction : Transaction
+    public class SalesReceiptTransaction
     {
         private readonly DateTime date;
         private readonly double amound;
