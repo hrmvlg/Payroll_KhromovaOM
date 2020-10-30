@@ -99,5 +99,23 @@ namespace PayrollTest_KhromovaOM
             // ???? nul or not null ????
             Assert.IsNotNull(e);
         }
+
+        [TestMethod]
+        public void TimeCardTransaction()
+        {
+            int empid = 5;
+            AddHourlyEmployee t = new AddHourlyEmployee(empid, "Bill", "Home", 15.25);
+            t.Execute();
+            TimeCardTransaction tct = new TimeCardTransaction(new DateTime(2015, 10, 31), 8.0, empid);
+            tct.Execute();
+            Employee e = PayrollDatabase.GetEmployee(empid);
+            Assert.IsNotNull(e);
+            PaymentClassification pc = e.Classification;
+            Assert.IsTrue(pc is HourlyClassification);
+            HourlyClassification hc = pc as HourlyClassification;
+            TimeCard tc = hc.GetTimeCard(new DateTime(2015, 10, 31));
+            Assert.IsNotNull(tc);
+            Assert.AreEqual(8.0, tc.Hours);
+        }
     }
 }
