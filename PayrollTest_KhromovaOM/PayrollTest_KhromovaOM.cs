@@ -85,5 +85,19 @@ namespace PayrollTest_KhromovaOM
             PaymentMethod pm = e.Method;
             Assert.IsTrue(pm is HoldMethod);
         }
+
+        [TestMethod]
+        public void DeleteEmployee()
+        {
+            AddCommissionedEmployee t = new AddCommissionedEmployee(4, "Bill", "Home", 2500, 3.2);
+            t.Execute();
+            Employee e = PayrollDatabase.GetEmployee(4);
+            Assert.IsNotNull(e);
+            DeleteEmployeeTransaction dt = new DeleteEmployeeTransaction(4);
+            dt.Execute();
+            e = PayrollDatabase.GetEmployee(4);
+            // ???? nul or not null ????
+            Assert.IsNotNull(e);
+        }
     }
 }
