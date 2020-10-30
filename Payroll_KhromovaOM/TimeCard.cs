@@ -15,16 +15,7 @@ namespace Payroll_KhromovaOM
             this.hours = hours;
         }
 
-        public double Hours
-        {
-            get => hours;
-        }
-
-        public DateTime Date
-        {
-            get => date;
-        }
-
-
+        public double Hours { get => hours; }
+        public DateTime Date { get => date; }
     }
 }

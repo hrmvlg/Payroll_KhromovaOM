@@ -117,5 +117,23 @@ namespace PayrollTest_KhromovaOM
             Assert.IsNotNull(tc);
             Assert.AreEqual(8.0, tc.Hours);
         }
+
+        [TestMethod]
+        public void SalesReceiptTransaction()
+        {
+            int empid = 1;
+            AddCommissionedEmployee t = new AddCommissionedEmployee(empid, "Bill", "Home", 15.25, 12.2);
+            t.Execute();
+            SalesReceiptTransaction srt = new SalesReceiptTransaction(new DateTime(2015, 10, 31), 8, empid);
+            srt.Execute();
+            Employee e = PayrollDatabase.GetEmployee(empid);
+            Assert.IsNotNull(e);
+            PaymentClassification pc = e.Classification;
+            Assert.IsTrue(pc is CommisionedClassification);
+            CommisionedClassification cc = pc as CommisionedClassification;
+            SalesReceipt sr = cc.GetSalesReceipt(new DateTime(2015, 10, 31));
+            Assert.IsNotNull(sr);
+            Assert.AreEqual(8, sr.Amound);
+        }
     }
 }
