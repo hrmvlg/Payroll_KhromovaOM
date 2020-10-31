@@ -1,6 +1,5 @@
 ﻿using System;
 using Payroll_KhromovaOM;
-using Payroll_KhromovaOM.Commissioned;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Payroll_KhromovaOM.Add;
 using Payroll_KhromovaOM.Hourly;
@@ -66,7 +65,6 @@ namespace PayrollTest_KhromovaOM
             PaymentMethod pm = e.Method;
             Assert.IsTrue(pm is HoldMethod);
         }
-
 
         [TestMethod]
         public void TestAddHourlyEmployee()
@@ -154,6 +152,108 @@ namespace PayrollTest_KhromovaOM
             ServiceCharge sc = af.GetServiceCharge(new DateTime(2015, 11, 8));
             Assert.IsNotNull(sc);
             //Assert.AreEqual(12.15, sc.Charge, .001);
+        }
+
+        [TestMethod]
+        public void TestChangeNameTransaciton()
+        {
+            int empid = 2;
+            AddHourlyEmployee t = new AddHourlyEmployee(empid, "Bill", "Home", 15.25);
+            t.Execute();
+            ChangeNameTransaction cnt = new ChangeNameTransaction(empid, "Bob");
+            cnt.Execute();
+            Employee e = PayrollDatabase.GetEmployee(empid);
+            Assert.IsNotNull(e);
+            Assert.AreEqual("Bob", e.Name);
+        }
+
+        [TestMethod]
+        public void TestChangeAddressTransaciton()
+        {
+            int empid = 2;
+            AddHourlyEmployee t = new AddHourlyEmployee(empid, "Bill", "Home", 15.25);
+            t.Execute();
+            ChangeAddressTransaction cat = new ChangeAddressTransaction(empid, "Another home");
+            cat.Execute();
+            Employee e = PayrollDatabase.GetEmployee(empid);
+            Assert.IsNotNull(e);
+            Assert.AreEqual("Another home", e.Address);
+        }
+
+        [TestMethod]
+        public void ChangeHourlyTransaction()
+        {
+            int empid = 8;
+            AddCommissionedEmployee t = new AddCommissionedEmployee(empid, "Lance", "Home", 2500, 3.2);
+            t.Execute();
+            ChangeHourlyTransaction cht = new ChangeHourlyTransaction(empid, 27.52);
+            cht.Execute();
+            Employee e = PayrollDatabase.GetEmployee(empid);
+            Assert.IsNotNull(e);
+            PaymentClassification pc = e.Classification;
+            Assert.IsTrue(pc is HourlyClassification);
+            HourlyClassification hc = pc as HourlyClassification;
+            Assert.AreEqual(27.52, hc.HourlyRate, .001);
+            PaymentSchedule ps = e.Schedule;
+            Assert.IsTrue(ps is WeeklySchedule);
+        }
+
+        [TestMethod]
+        public void ChangeSalariedTransaction()
+        {
+            int empid = 8;
+            AddCommissionedEmployee t = new AddCommissionedEmployee(empid, "Lance", "Home", 2500, 3.2);
+            t.Execute();
+            ChangeSalariedTransaction cht = new ChangeSalariedTransaction(empid, 2500);
+            cht.Execute();
+            Employee e = PayrollDatabase.GetEmployee(empid);
+            Assert.IsNotNull(e);
+            PaymentClassification pc = e.Classification;
+            Assert.IsTrue(pc is SalariedClassification);
+            SalariedClassification sc = pc as SalariedClassification;
+            Assert.AreEqual(2500, sc.Salary, .001);
+            PaymentSchedule ps = e.Schedule;
+            Assert.IsTrue(ps is MothlySchedule);
+        }
+
+        [TestMethod]
+        public void ChangeCommissionedTransaction()
+        {
+            int empid = 8;
+            AddSalariedEmployee t = new AddSalariedEmployee(empid, "Lance", "Home", 2500);
+            t.Execute();
+            ChangeCommissionedTransaction cht = new ChangeCommissionedTransaction(empid, 2500, 0.020);
+            cht.Execute();
+            Employee e = PayrollDatabase.GetEmployee(empid);
+            Assert.IsNotNull(e);
+            PaymentClassification pc = e.Classification;
+            Assert.IsTrue(pc is CommisionedClassification);
+            CommisionedClassification cc = pc as CommisionedClassification;
+            Assert.AreEqual(2500.00, cc.Salary, .001);
+            Assert.AreEqual(0.020, cc.CommisionRate);
+            PaymentSchedule ps = e.Schedule;
+            Assert.IsTrue(ps is BiweeklySchedule);
+        }
+
+        [TestMethod]
+        public void TestChangeUnionMember()
+        {
+            int empid = 12;
+            AddHourlyEmployee t = new AddHourlyEmployee(empid, "Bill", "Home", 15.35);
+            t.Execute();
+            int memberid = 7743;
+            ChangeMemberTransaction cmt = new ChangeMemberTransaction(empid, memberid, 99.42);
+            Employee e = PayrollDatabase.GetEmployee(empid);
+            cmt.Execute();
+            Assert.IsNotNull(e);
+            Affiliation affiliation = e.Affiliation;
+            Assert.IsNotNull(affiliation);
+            Assert.IsTrue(affiliation is UnionAffilation);
+            UnionAffilation uf = affiliation as UnionAffilation;
+            Assert.AreEqual(99.42, uf.Charge, .001);
+            Employee member = PayrollDatabase.GetUnionMember(memberid);
+            Assert.IsNotNull(member);
+            Assert.AreEqual(e, member);
         }
     }
 }

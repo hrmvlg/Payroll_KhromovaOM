@@ -25,6 +25,7 @@ namespace Payroll_KhromovaOM
         public string Address
         {
             get { return address; }
+            set { address = value; }
         }
 
         public int EmpId

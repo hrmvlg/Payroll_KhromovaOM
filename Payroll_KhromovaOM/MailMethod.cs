@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Payroll_KhromovaOM
 {
-    public class BiweeklySchedule : PaymentSchedule
+    class MailMethod : PaymentMethod
     {
         public override string ToString()
         {
-            return "Biweekly";
+            return "Mail";
         }
     }
 }

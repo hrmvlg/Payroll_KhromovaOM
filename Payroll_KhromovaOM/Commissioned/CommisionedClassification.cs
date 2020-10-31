@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Payroll_KhromovaOM.Commissioned
+namespace Payroll_KhromovaOM
 {
     public class CommisionedClassification : PaymentClassification
     {
